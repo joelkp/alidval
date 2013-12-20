@@ -1,0 +1,78 @@
+alidval: A program to calculate "alphabetic id values" for text strings
+=======================================================================
+
+adlidval is a program to calculate "alphabetical id values" for text strings.
+If strings are sorted by their ids, the result is an alphabetical ordering
+(within the limits of the algorithm generating the ids).
+
+alidval takes one or more strings, for each of which an "alphabetical id
+value" is independently produced. Options can be used to modify the algorithm
+and/or place the generated ids within a specified range.
+
+The only algorithm offered in the present version is simple. Its precision is
+limited to the first 11 characters of the string. It is case-insensitive.
+Further, it only recognizes English alphabet ASCII characters as being letters.
+By default, all other characters are treated as being identical, and jointly
+given priority before 'A'.
+
+The output id value ranges from 0.0 to 1.0 by default, but this can be changed.
+
+Options
+-------
+
+-A  Make strings that begin with an alphabetical character fill up the whole
+    output id range; other leading characters are made equal to 'A' or 'Z',
+    depending on which priority they would ordinarily take. This is suitable
+    for use on a set of strings that all begin with a letter.
+
+-r  Map the output id value onto a specified range. The range is specified in
+    the format: <number>,<number>
+        The numbers are the lower and upper bound, respectively; each number
+    is optional, the default value being used if a number is omitted. If the
+    lower bound is a value exceeding that of the upper bound, this reverses
+    the order of the numbering: 'Z' comes before 'Y', and so on.
+
+Building
+--------
+
+The program is very simple and has no dependencies apart from libc, so if you
+have a C compiler (gcc is tested) installed and configured, along with the
+"make" program (GNU or BSD), you can probably just type "make" in the alidval
+directory.
+
+Once "make" has finished successfully, to use it you can either run "alidval"
+right there ("./alidval ...") or copy it to an appropriate "bin" directory
+(like /usr/local/bin).
+
+The above assumes a *nix system like Linux or *BSD.
+
+Uses
+----
+
+At present, the use cases for alidval may be limited, given its limitations. 
+It can be used for producing a numerical ordering of names, when collisions
+due to the limited precision are not a risk.
+
+Here are examples of uses for the program, which can perhaps give you further
+ideas.
+
+MediaWiki - alphabetically ordering custom namespaces:
+    On a MediaWiki wiki, namespaces have both names and ids. They are listed
+    within the software in the order of their ids, so if you want your custom
+    namespaces to be listed in alphabetic order, their ids must increase in
+    alphabetic order. (Of course, standard namespaces and other namespaces,
+    perhaps added by extensions, won't be in order - there's no simple
+    solution for that.)
+        Here's where alidval can be of use: given an id range (e.g., 3000-4000)
+    it can generate ids for the namespaces if you give it their names. You'll
+    just have to use the -r option for the range (and if all the names begin
+    with a letter, -A will make for more efficient use of the range). As in:
+    "alidval -Ar 3000,3998 <name(s)>". Then, round the ids to the nearest even
+    number and you can use them.
+        If you use a range of 1000, then there is no risk of id collisions for
+    namespace names as long as the first two letters are distinct. (In general:
+    for a range of 28 (e.g. using -Ar 500,526), the first letter will be
+    significant. Then, each time you multiply the length of the range by 27,
+    you'll guarantee that another letter will be significant, up to the limit
+    of 11 significant leading characters.)
+
