@@ -1,4 +1,4 @@
-alidval: A program to calculate "alphabetic id values" for text strings
+alidval: A program to calculate "alphabetical id values" for text strings
 =======================================================================
 
 adlidval is a program to calculate "alphabetical id values" for text strings.
@@ -46,6 +46,26 @@ right there ("./alidval ...") or copy it to an appropriate "bin" directory
 
 The above assumes a *nix system like Linux or *BSD.
 
+Caveats
+-------
+
+1. With the present algorithm, adding non-alphabetical characters at the end
+of a string does not change its id. This can make sense if you add whitespace
+(and possibly some other symbols), but not if you add digits. This could be
+changed in a future version by making alidval distinguish between more kinds
+of non-alphabetical characters.
+    This would, of course, change the ids for all strings, and the present
+behavior would then be preserved as an option.
+
+2. As far as alidval is concerned, strings are basically a number expressed in
+a place-value notation. And, just like 1.999... = 2.0 in decimal, Azzz... = B
+according to alidval. Since precision is finite, a finite number of 'Z's are
+sufficient to effectively increment the letter before them.
+    This behavior can be changed in a future version, in the following ways:
+distinguishing another character as the last instead of 'Z'; and/or reserving
+an unused number after the last characters; and/or adding an arbitrary
+precision mode.
+
 Uses
 ----
 
@@ -59,8 +79,8 @@ ideas.
 MediaWiki - alphabetically ordering custom namespaces:
     On a MediaWiki wiki, namespaces have both names and ids. They are listed
     within the software in the order of their ids, so if you want your custom
-    namespaces to be listed in alphabetic order, their ids must increase in
-    alphabetic order. (Of course, standard namespaces and other namespaces,
+    namespaces to be listed in alphabetical order, their ids must increase in
+    alphabetical order. (Of course, standard namespaces and other namespaces,
     perhaps added by extensions, won't be in order - there's no simple
     solution for that.)
         Here's where alidval can be of use: given an id range (e.g., 3000-4000)

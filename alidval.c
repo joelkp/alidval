@@ -1,4 +1,4 @@
-/* alidval: program to calculate "alphabetic id values" for text strings
+/* alidval: program to calculate "alphabetical id values" for text strings
  *
  * Copyright (c) 2013 Joel K. Pettersson
  *
@@ -122,13 +122,13 @@ static int parse_option(int argc, const char *const*args)
 }
 
 /**
- * Calculate alphabetic id for the passed string using a very simple
- * algorithm. Ignores case and treats all non-ASCII-alphabetical
- * characters as being identical. Precision in calculating the id
- * value is limited to the first 11 characters; the twelvth is not
- * fully (nor, in many cases, even partially) distintinguished, and
- * any further characters leave the output unaffected.
- * \return alphabetic string id ranging from 0.0 to 1.0, inclusive.
+ * Calculate alphabetical id for the passed string using a very simple
+ * algorithm. Ignores case and treats all non-ASCII-alphabetical characters
+ * as being identical. Precision in calculating the id value is limited to
+ * the first 11 characters; the twelvth is not fully (nor, in many cases,
+ * even partially) distintinguished, and any further characters leave the
+ * output unaffected.
+ * \return alphabetical string id ranging from 0.0 to 1.0, inclusive.
  */
 static double calc_string_id_simple_nocase(const char *str)
 {
@@ -139,7 +139,8 @@ static double calc_string_id_simple_nocase(const char *str)
 	if (str == NULL) return id;
 	/*
 	 * Proceed through the characters; each is assigned a value from
-	 * 0 (non-alphabetic characters) or ranging from 1 ('A')  to 26 ('Z').
+	 * 0 (non-alphabetical characters) or ranging from 1 ('A') to
+	 * 26 ('Z').
 	 *
 	 * If the "-A" switch was used, the first character is handled
 	 * differently, and assigned a value from 0 ('A' and non-alphabetic
@@ -233,7 +234,8 @@ int main(int argc, const char *const*argv)
 	}
 
 	/*
-	 * Calculate alphabetical id for string argument(s).
+	 * Calculate, optionally scale, and print alphabetical id for
+	 * string argument(s).
 	 */
 	while (argc-- > 0) {
 		string_id = calc_string_id_simple_nocase(*argv);
